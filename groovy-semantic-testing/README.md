@@ -3,7 +3,7 @@ Semantic Testing with Groovy/Spock/Geb
 Groovy testing a (web) project from the unit to the system
 
 * [Slides](groovy-semantic-testing-slides.svg)
-* [Code](mkutz/demonstration/geb-spock-demo)
+* [Code](https://github.com/mkutz/demonstration/tree/master/geb-spock-demo)
 
 Abstract
 --------
