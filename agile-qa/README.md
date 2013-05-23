@@ -2,7 +2,7 @@ Agile Quality Assurance
 =======================
 A way of assuring quality in agile projects
 
-* [Slides](agile-qa.svg)
+* [Slides](agile-qa-slides.svg)
 
 Abstract
 --------
