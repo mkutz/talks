@@ -2,9 +2,9 @@
 
 - [ ] Finish [slides](five-questions-about-agile-quality.svg)
 - [x] What is software quality?
-- [X] What is agile software development?
-- [X] Who is interested in quality?
-- [X] Who is responsible for quality?
+- [x] What is agile software development?
+- [x] Who is interested in quality?
+- [x] Who is responsible for quality?
 - [ ] How can we ensure quality in/by an agile process?
 
 
