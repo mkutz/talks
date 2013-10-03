@@ -5,7 +5,7 @@
 - [x] What is agile software development?
 - [x] Who is interested in quality?
 - [x] Who is responsible for quality?
-- [ ] How can we ensure quality in/by an agile process?
+- [x] How can we ensure quality in/by an agile process?
 
 
 ##1. What is (software) _quality_?
@@ -46,20 +46,124 @@ However this leafs some quality criteria for the _Team_ since it could hide _sta
 
 ###What to test?
 
-Well testing seams a good idea -- but what needs to be tested? In other words how do I test quality? Of course by testing everything that quality _is_ (see question 1).
+Well testing seams a good idea -- but what needs to be tested? In other words how do I test quality? Of course by testing everything that quality _is_ (see [question 1](#1-what-is-software-quality)).
 
-###How/when to test?
+###When to test?
 
-Testing all the quality criteria of a software product that was developed in one sprint may be doable by hand of course... but in the next sprint the Team will change the product and that changes the software's behaviour... maybe even breaks a feature of the first sprint. So the needed test effort for _usefulness_ of a growing product rises with each developed feature.
+As described in [question 2](#2-what-is-agile-software-development) the _Team_ is responsible to deliver _shippable code_. To know that the code actually _is_ shippable it needs to be tested. So the time to test is at the very least and latest right before the Review.
+
+###How to test?
+
+Testing all the quality criteria of a software product that was developed in one sprint may be doable by hand of course, but in the next sprints the Team will change the product and that changes the software's behaviour -- maybe even breaks a feature of the previous sprint. So the needed test effort for _usefulness_ of a growing product rises with each developed feature.
 
 At some point the consequently quality aware team will lower their velocity to almost 0 which will not be what the Product Owner wants.
 
 The velocity aware team will keep their test effort at a certain limit that they can do without lowering their velocity... which will lead to unexpected bugs and to a reduced confidence about their own works quality. Statements like "come on, I can not test everything" or "it worked last time on my machine" are an indicators for such a situation.
 
-Both are non existent extremes but somewhere between lies what I experienced in my carrier several times.
+Both are non existent extremes but somewhere between lies the usual truth.
 
-...TODO
+So the only way to deliver quality after each sprint is _test automation_. While we develop a new feature in the product we should write a software that ensures that that feature works just like the Product Owner wants it to work. That software will grow and change as the product grows and changes, so it needs to be just as maintainable as the product itself.
 
-###How to write tests that _embrace change_?
+Having such a functional acceptance test suite running every commit, every night, at the weekend or at least at the end of the sprint enables us to change the whole implementation while we can ensure that the product still works as requested.
 
-...TODO
+###How to write tests that _respond to change_?
+
+The [Agile Manifesto](http://agilemanifesto.org/) values "responding to change over following a plan". In agile software development sometimes a whole User Story becomes unwanted _after_ it was developed and accepted by the Product Owner for whatever reasons. Also there might be little changes to the workflows of the product. For instance there might be an additional checkbox in the login form of a web application. This is not a complex change at all, but if our valued acceptance tests need to do a login before they can do anything, than we would need to change almost every test case.
+
+####Non-semantic test example
+Let' say we get a story A:
+> As customer
+> I want the users to login to the application with user name and password before they can use any feature of the application
+> to be able to track the user's activities.
+
+And of course we created acceptance tests for that:
+```groovy
+class LoginSpec extends AcceptanceTest {
+    def "it should be possible to login with valid user name and password"() {
+        given:
+        String validUserName = "someuser"
+        String validPassword = "somepassword"
+
+        when:
+        browser.to(LoginPage)
+        browser.page.userNameField = validUserName
+        browser.page.passwordField = validPassword
+        browser.page.loginButton.click()
+        
+        then:
+        browser.isAt(WelcomePage)
+    }
+
+    def "it should not be possible to login with invalid user name and password"() {
+        given:
+        String invalidUserName = "wronguser"
+        String invalidPassword = "wrongpassword"
+        
+        when:
+        browser.to(LoginPage)
+        browser.page.userNameField = invalidUserName
+        browser.page.passwordField = invalidUserName
+        browser.page.loginButton.click()
+
+        then:
+        !browser.isAt(WelcomePage)
+    }
+}
+```
+
+Some sprints later we get story B:
+> As legal department
+> I want the users to accept the user service agreement
+> so we can not be hold responsible for illegal actions of the users.
+
+This story changes the login process and therefore we need to change _every_ test that uses that process, which can be easily 90% of all tests. This makes rather small change an incredible amount of work to do.
+
+####Semantic test example
+
+If our test would just have implemented what the Story said, it would not be so difficult to do. Here is the semantic test for story A:
+```groovy
+class LoginSpec extends AcceptanceTest {
+    def "it should be possible to login with valid user name and password"() {
+        given:
+        UserActor user = new User(userName: "someuser", password: "somepassword")
+
+        when:
+        user.login()
+
+        then:
+        user.isLoggedIn()
+    }
+
+    def "it should not be possible to login with invalid user name and password"() {
+        given:
+        UserActor user = new User(userName: "wronguser", password: "wrongpassword")
+
+        when:
+        user.login()
+
+        then:
+        !user.isLoggedIn()
+    }
+}
+```
+
+The `UserActor` capsules all the details of the workflow, so there is just one place that needs to be changed:
+```groovy
+class UserActor {
+    
+    void login() {
+        browser.to(LoginPage)
+        browser.page.userNameField = invalidUserName
+        browser.page.passwordField = invalidUserName
+        browser.page.userServiceAgreementCheckbox.check // only change for Story B
+        browser.page.loginButton.click()
+    }
+    
+    boolean isLoggedIn() {
+        return browser.isAt(WelcomePage)
+    }
+}
+```
+
+Semantic tests like that obviously are also way better readable. Variants of workflows can be implemented very easily, new Team mates can understand the code rather quick and testers can be taught to write automated test cases relying on their fellow developers to write powerful Test Actor classes.
+Even sceptical Product Owners can be introduced to the code so they can check if the test actually tests what was requested.
