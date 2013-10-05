@@ -1,12 +1,6 @@
 # Five Questions about Agile Quality
 
-- [ ] Finish [slides](five-questions-about-agile-quality.svg)
-- [x] What is software quality?
-- [x] What is agile software development?
-- [x] Who is interested in quality?
-- [x] Who is responsible for quality?
-- [x] How can we ensure quality in/by an agile process?
-
+This talk comes with [slides](five-questions-about-agile-quality.svg). Just download and open with your favourite web browser (Chrome runs them fastest).
 
 ##1. What is (software) _quality_?
 
