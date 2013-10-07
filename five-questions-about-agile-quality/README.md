@@ -42,8 +42,8 @@ However this leaves some quality criteria for the _Team_ since it could hide _st
 
 Well testing seams a good idea -- but what needs to be tested? In other words how do I test quality? Of course by testing everything that quality _is_ (see [question 1](#1-what-is-software-quality)).
 
-This does not require any unit tests but high level black box tests for the _whole_ software system (that's why I like to call these _system tests_) since such tests can prove that the quality criteria a met.
-These tests may come in quite different favours requiring very different appoaches:
+This does not require any unit tests but high level black box tests for the _whole_ software system (that's why I like to call these _system tests_) since such tests can prove that the quality criteria are met.
+These tests may come in quite different flavours requiring very different approaches:
 - feature tests for _usefulness_
 - stress tests for _stability_
 - user click tests for _usability_ and _beauty_
