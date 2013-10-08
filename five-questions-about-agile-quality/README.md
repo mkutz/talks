@@ -14,19 +14,19 @@ So software quality should be pretty much the same as tool quality. If I think a
 - It should look good -- its look should go well with my other tools. This might not be as important than the other things but I think _beauty_ is a feature.
 - And of course it should have a good test coverage... wait, what? I don't care about test coverage, I simply _expect_ that all the criteria I care about were properly tested!
 
-This list is not complete but I think it shows what we really should care about when we develop software. Test coverage is just a help for us to achieve _real value_ like stability. It is not what the user really wants.
+This list is not complete but I think it shows what we really should care about when we develop software. Test coverage is just a help for us to achieve _real quality_ like stability. It is not what the user really wants.
 
 ## 2. What is _agile_ software development?
 
-In this talk I will mainly refer to Scrum and its vocabulary. However most (if not all) of the statements are valid for agile software development in general.
+[Agile software development](http://en.wikipedia.org/wiki/Agile_software_development) basically should follow the [Agile Manifesto](http://agilemanifesto.org/). This can be achieved by various methodologies. In this talk I will mainly refer to Scrum and its vocabulary. However most (if not all) of the statements are valid for agile software development in general.
 
-When we use Scrum to develop software there is a _Product Owner_ that will give user stories to the _Team_, that will develop the features described by the story and deliver it as shippable code. There is a Review meeting in which the Product Owner (and maybe some Stakeholders) accepts or declines the delivered code.
+When we use Scrum to develop software there is a _Product Owner_ that will give user stories to the _Team_, that will develop the features described by the story and deliver it as _shippable code_. There is a Review meeting in which the Product Owner (and maybe some Stakeholders) accepts or declines the delivered code.
 
-An important assert in this process is that the _Product Owner_ can not check the software wholly -- so he/she needs to _trust_ in the _Team_ to deliver _potentially shippable code_ which has no mayor quality issues.
+An important assertion for this process is that the _Product Owner_ can not check the software wholly -- so he/she needs to _trust_ in the _Team_ to deliver _potentially shippable code_ which has no mayor quality issues.
 
 ## 3. Who is interested in _quality_ in an _agile_ development process?
 
-It is the Stakeholders that really care about quality. The users want to use a good software that makes their work easier, the customers want their workers to be more efficient etc. In Scrum these Stakeholders are represented by the Product Owner so it is the Product Owner who should be interested for them (he/she is telling _User_ Stories).
+It is the Stakeholders that really care about quality. The users want to use a good software that makes their work easier, the customers want their workers to be more efficient etc. In Scrum these Stakeholders are represented by the _Product Owner_ so it is the _Product Owner_ who should be interested for them (he/she is telling _User_ Stories).
 
 Also the _Team_ has a certain interest to deliver quality work simply because producing good products feels better to them.
 
@@ -52,6 +52,8 @@ These tests may come in quite different flavours requiring very different approa
 However testing single classes in _class tests_ is useful (and usually needed) for the team to coordinate their work since they give feedback more rapidly and help to structure work using test driven development.
 
 Also testing interfaces of complex components like deployment units _is_ valuable for the same reasons and since they help to keep these components reusable.
+
+![Image visualising the three test categories.](test-categories.svg)
 
 So there are three essential categories of tests:
 1. (and most important) _system tests_
